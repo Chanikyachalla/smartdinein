@@ -10,7 +10,7 @@ export function VendorDashboard() {
   const [activeTab, setActiveTab] = useState('mess'); // Default to mess, overridden based on facility
   const [items, setItems] = useState([]);
   const [messMenu, setMessMenu] = useState(null);
-  
+
   const [facility, setFacility] = useState(null);
   const [crowdLevel, setCrowdLevel] = useState('low');
   const [vendorInfo, setVendorInfo] = useState(null);
@@ -48,32 +48,32 @@ export function VendorDashboard() {
 
   useEffect(() => {
     if (activeTab === 'analytics' && vendorInfo?.facilityId) {
-        setLoadingAnalytics(true);
-        setLoadingReviews(true);
-        fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/analytics`, {
-            headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
-        })
+      setLoadingAnalytics(true);
+      setLoadingReviews(true);
+      fetch(`${process.env.API_URL}/api/facilities/${vendorInfo.facilityId}/analytics`, {
+        headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
+      })
         .then(res => res.json())
         .then(data => {
-            setAnalytics(data);
-            setLoadingAnalytics(false);
+          setAnalytics(data);
+          setLoadingAnalytics(false);
         })
         .catch(err => {
-            console.error(err);
-            setLoadingAnalytics(false);
+          console.error(err);
+          setLoadingAnalytics(false);
         });
 
-        fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/reviews`, {
-            headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
-        })
+      fetch(`${process.env.API_URL}/api/facilities/${vendorInfo.facilityId}/reviews`, {
+        headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
+      })
         .then(res => res.json())
         .then(data => {
-            setReviews(data);
-            setLoadingReviews(false);
+          setReviews(data);
+          setLoadingReviews(false);
         })
         .catch(err => {
-            console.error(err);
-            setLoadingReviews(false);
+          console.error(err);
+          setLoadingReviews(false);
         });
     }
   }, [activeTab, vendorInfo]);
@@ -83,27 +83,27 @@ export function VendorDashboard() {
     if (!vendorInfo?.facilityId) return;
     if (activeTab === 'orders') {
       setLoadingOrders(true);
-      fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/orders`, {
+      fetch(`${process.env.API_URL}/api/facilities/${vendorInfo.facilityId}/orders`, {
         headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
       })
-      .then(r => r.json())
-      .then(data => { setOrders(data); setLoadingOrders(false); })
-      .catch(() => setLoadingOrders(false));
+        .then(r => r.json())
+        .then(data => { setOrders(data); setLoadingOrders(false); })
+        .catch(() => setLoadingOrders(false));
     }
     if (activeTab === 'history') {
       setLoadingOrders(true);
-      fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/orders/history`, {
+      fetch(`${process.env.API_URL}/api/facilities/${vendorInfo.facilityId}/orders/history`, {
         headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
       })
-      .then(r => r.json())
-      .then(data => { setOrderHistory(data); setLoadingOrders(false); })
-      .catch(() => setLoadingOrders(false));
+        .then(r => r.json())
+        .then(data => { setOrderHistory(data); setLoadingOrders(false); })
+        .catch(() => setLoadingOrders(false));
     }
   }, [activeTab, vendorInfo]);
 
   const loadData = async (facilityId) => {
     try {
-      const facRes = await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${facilityId}`);
+      const facRes = await fetch(`${process.env.API_URL}/api/facilities/${facilityId}`);
       if (facRes.ok) {
         const facData = await facRes.json();
         setFacility(facData);
@@ -111,7 +111,7 @@ export function VendorDashboard() {
         setActiveTab(facData.type === 'canteen' ? 'canteen' : 'mess');
       }
 
-      const menuRes = await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${facilityId}/menu`);
+      const menuRes = await fetch(`${process.env.API_URL}/api/facilities/${facilityId}/menu`);
       if (menuRes.ok) {
         const menuData = await menuRes.json();
         if (Array.isArray(menuData)) {
@@ -128,7 +128,7 @@ export function VendorDashboard() {
   const updateCrowd = async (level) => {
     setCrowdLevel(level);
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/crowd`, {
+      await fetch(`${process.env.API_URL}/api/facilities/${vendorInfo.facilityId}/crowd`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -142,15 +142,15 @@ export function VendorDashboard() {
   };
 
   const toggleAvailability = async (id, currentStatus) => {
-    const nextStatus = currentStatus === 'available' ? 'limited' 
-                     : currentStatus === 'limited' ? 'soldOut' 
-                     : 'available';
-    
+    const nextStatus = currentStatus === 'available' ? 'limited'
+      : currentStatus === 'limited' ? 'soldOut'
+        : 'available';
+
     // Optimistic UI update
     setItems(items.map(item => item._id === id ? { ...item, availability: nextStatus } : item));
 
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/api/items/${id}/availability`, {
+      await fetch(`${process.env.API_URL}/api/items/${id}/availability`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -168,7 +168,7 @@ export function VendorDashboard() {
   const handleAddMessItem = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/menu/today`, {
+      const res = await fetch(`${process.env.API_URL}/api/facilities/${vendorInfo.facilityId}/menu/today`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -195,7 +195,7 @@ export function VendorDashboard() {
   const handleClearMenu = async () => {
     if (!window.confirm('Are you sure you want to clear the entire menu for today?')) return;
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/menu/today`, {
+      const res = await fetch(`${process.env.API_URL}/api/facilities/${vendorInfo.facilityId}/menu/today`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${vendorInfo.token}`
@@ -212,7 +212,7 @@ export function VendorDashboard() {
 
   const handleRemoveItem = async (itemId) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/menu/today/items/${itemId}`, {
+      const res = await fetch(`${process.env.API_URL}/api/facilities/${vendorInfo.facilityId}/menu/today/items/${itemId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${vendorInfo.token}`
@@ -229,7 +229,7 @@ export function VendorDashboard() {
 
   const handleNoteReview = async (reviewId) => {
     try {
-      await fetch(`${import.meta.env.VITE_API_URL}/api/feedback/${reviewId}`, {
+      await fetch(`${process.env.API_URL}/api/feedback/${reviewId}`, {
         method: 'DELETE'
       });
       // Remove from local state instantly
@@ -242,7 +242,7 @@ export function VendorDashboard() {
   const handleAddCanteenItem = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/items`, {
+      const res = await fetch(`${process.env.API_URL}/api/items`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${vendorInfo.token}` },
         body: JSON.stringify({
@@ -263,7 +263,7 @@ export function VendorDashboard() {
 
   const handleDeleteCanteenItem = async (itemId) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/items/${itemId}`, {
+      const res = await fetch(`${process.env.API_URL}/api/items/${itemId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
       });
@@ -273,7 +273,7 @@ export function VendorDashboard() {
 
   const handleCompleteOrder = async (orderId) => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}/complete`, {
+      const res = await fetch(`${process.env.API_URL}/api/orders/${orderId}/complete`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
       });
@@ -286,7 +286,7 @@ export function VendorDashboard() {
     navigate('/vendor');
   };
 
-  if (!facility) return <div style={{padding: '2rem'}}>Loading Dashboard... (Please ensure backend and DB are running)</div>;
+  if (!facility) return <div style={{ padding: '2rem' }}>Loading Dashboard... (Please ensure backend and DB are running)</div>;
 
   return (
     <div className="dashboard-layout">
@@ -295,7 +295,7 @@ export function VendorDashboard() {
           <h2>Vendor Admin</h2>
           <p>{facility.name}</p>
         </div>
-        
+
         <nav className="sidebar-nav">
           {facility.type === 'canteen' && (
             <>
@@ -319,7 +319,7 @@ export function VendorDashboard() {
             <BarChart3 size={20} /> Feedback Analytics
           </button>
         </nav>
-        
+
         <div className="sidebar-footer">
           <button className="nav-btn text-danger" onClick={handleLogout}>
             <LogOut size={20} /> Sign Out
@@ -331,10 +331,10 @@ export function VendorDashboard() {
         <header className="dashboard-header">
           <h1>{activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} Management</h1>
           <div className="crowd-control-widget">
-            <span className="widget-label"><Users size={16}/> Live Crowd:</span>
+            <span className="widget-label"><Users size={16} /> Live Crowd:</span>
             <div className="crowd-toggles">
               {['low', 'medium', 'high'].map(level => (
-                <button 
+                <button
                   key={level}
                   className={`crowd-btn ${crowdLevel === level ? 'active' : ''} ${level}`}
                   onClick={() => updateCrowd(level)}
@@ -423,14 +423,14 @@ export function VendorDashboard() {
                 </button>
               )}
             </div>
-            
+
             <div style={{ padding: '1.5rem', borderBottom: '1px solid var(--border-color)', backgroundColor: 'var(--surface)' }}>
               <h4 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>Add Item to Today's Menu</h4>
               <form className="add-item-form" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr) auto', gap: '1rem', alignItems: 'end' }} onSubmit={handleAddMessItem}>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label style={{ marginBottom: '0.25rem' }}>Item Name</label>
-                  <input type="text" className="input-field" placeholder="e.g. Paneer Masala" style={{ marginTop: 0 }} 
-                         value={newItemName} onChange={e => setNewItemName(e.target.value)} required />
+                  <input type="text" className="input-field" placeholder="e.g. Paneer Masala" style={{ marginTop: 0 }}
+                    value={newItemName} onChange={e => setNewItemName(e.target.value)} required />
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
                   <label style={{ marginBottom: '0.25rem' }}>Meal Slot</label>
@@ -453,11 +453,11 @@ export function VendorDashboard() {
                 </button>
               </form>
             </div>
-            
+
             {!messMenu && (
               <div className="placeholder-content" style={{ padding: '4rem 1rem' }}>
-                 <Utensils size={48} style={{ color: 'var(--text-secondary)', margin: '0 auto 1rem auto', opacity: 0.5 }} />
-                 <p>No items added for today yet.</p>
+                <Utensils size={48} style={{ color: 'var(--text-secondary)', margin: '0 auto 1rem auto', opacity: 0.5 }} />
+                <p>No items added for today yet.</p>
               </div>
             )}
 
@@ -480,8 +480,8 @@ export function VendorDashboard() {
                                 {item.dietaryTags?.[0] || 'veg'}
                               </span>
                             </div>
-                            <button 
-                              onClick={() => handleRemoveItem(item._id)} 
+                            <button
+                              onClick={() => handleRemoveItem(item._id)}
                               style={{ color: 'var(--danger-color)', background: 'transparent', border: 'none', cursor: 'pointer', padding: '0.25rem' }}
                               title="Delete Item"
                             >
@@ -506,7 +506,7 @@ export function VendorDashboard() {
                 <p>Track your {facility.type === 'mess' ? 'meal slot' : 'item'} ratings in real-time</p>
               </div>
             </div>
-            
+
             {/* â”€â”€ Star Ratings â”€â”€ */}
             <div style={{ padding: '2rem 2rem 1rem' }}>
               <h4 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>â­ Star Ratings</h4>

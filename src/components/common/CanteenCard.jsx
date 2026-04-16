@@ -13,7 +13,7 @@ export function CanteenCard({ item }) {
     
     setRatingSubmitted(true);
     try {
-        await fetch(`${import.meta.env.VITE_API_URL}/api/feedback`, {
+        await fetch(`${process.env.API_URL}/api/feedback`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

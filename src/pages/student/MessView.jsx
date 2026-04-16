@@ -16,7 +16,7 @@ export function MessView() {
 
   // Fetch facilities initially
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/facilities`)
+    fetch(`${process.env.API_URL}/api/facilities`)
       .then(res => res.json())
       .then(data => {
         const messes = data.filter(f => f.type === 'mess');
@@ -35,7 +35,7 @@ export function MessView() {
     if (!selectedFacilityId) return;
 
     setLoading(true);
-    fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${selectedFacilityId}/menu`)
+    fetch(`${process.env.API_URL}/api/facilities/${selectedFacilityId}/menu`)
       .then(res => {
         if (!res.ok) throw new Error('Menu not found');
         return res.json();
@@ -67,7 +67,7 @@ export function MessView() {
 
       <div className="facility-selector">
         {facilities.map(f => (
-          <button 
+          <button
             key={f._id}
             className={`tab-btn ${selectedFacilityId === f._id ? 'active' : ''}`}
             onClick={() => setSelectedFacilityId(f._id)}
@@ -89,29 +89,29 @@ export function MessView() {
 
       <main className="menu-container">
         {loading ? (
-             <div className="empty-state">
-              <p>Loading menu...</p>
-             </div>
+          <div className="empty-state">
+            <p>Loading menu...</p>
+          </div>
         ) : todaysMenu ? (
           <div className="slots-grid">
-            <MessSlotCard 
-              slotName="Breakfast" 
-              time={todaysMenu.breakfast?.time || 'Morning'} 
-              items={todaysMenu.breakfast?.items || []} 
+            <MessSlotCard
+              slotName="Breakfast"
+              time={todaysMenu.breakfast?.time || 'Morning'}
+              items={todaysMenu.breakfast?.items || []}
               facilityId={activeFacility._id}
               menuId={todaysMenu._id}
             />
-            <MessSlotCard 
-              slotName="Lunch" 
-              time={todaysMenu.lunch?.time || 'Afternoon'} 
-              items={todaysMenu.lunch?.items || []} 
+            <MessSlotCard
+              slotName="Lunch"
+              time={todaysMenu.lunch?.time || 'Afternoon'}
+              items={todaysMenu.lunch?.items || []}
               facilityId={activeFacility._id}
               menuId={todaysMenu._id}
             />
-            <MessSlotCard 
-              slotName="Dinner" 
-              time={todaysMenu.dinner?.time || 'Evening'} 
-              items={todaysMenu.dinner?.items || []} 
+            <MessSlotCard
+              slotName="Dinner"
+              time={todaysMenu.dinner?.time || 'Evening'}
+              items={todaysMenu.dinner?.items || []}
               facilityId={activeFacility._id}
               menuId={todaysMenu._id}
             />
@@ -119,7 +119,7 @@ export function MessView() {
         ) : (
           <div className="empty-state">
             <div className="empty-icon-container">
-              <Clock size={48} className="empty-icon"/>
+              <Clock size={48} className="empty-icon" />
             </div>
             <h2>Menu Not Posted Yet</h2>
             <p>The vendor has not uploaded today's menu. Please check back later.</p>

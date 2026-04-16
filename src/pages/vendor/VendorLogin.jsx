@@ -12,16 +12,16 @@ export function VendorLogin() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
-    
+
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/login`, {
+      const res = await fetch(`${process.env.API_URL}/api/users/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: username, password })
       });
-      
+
       const data = await res.json();
-      
+
       if (res.ok) {
         localStorage.setItem('vendorInfo', JSON.stringify(data));
         navigate('/vendor/dashboard');
@@ -54,7 +54,7 @@ export function VendorLogin() {
 
           <form onSubmit={handleLogin} className="auth-form">
             {error && <div className="error-message">{error}</div>}
-            
+
             <div className="form-group">
               <label htmlFor="username">Username</label>
               <div className="input-with-icon">

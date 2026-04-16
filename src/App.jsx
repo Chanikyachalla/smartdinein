@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 
 import { EntryScreen } from './pages/student/EntryScreen';
 import { MessView } from './pages/student/MessView';
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/vendor" element={<VendorLogin />} />
         <Route path="/vendor/dashboard" element={<VendorDashboard />} />
       </Routes>
+      <Analytics />
     </BrowserRouter>
   );
 }

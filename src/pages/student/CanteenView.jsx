@@ -19,13 +19,13 @@ export function CanteenView() {
 
   useEffect(() => {
     // fetch canteen facility first, then its items
-    fetch(`${import.meta.env.VITE_API_URL}/api/facilities`)
+    fetch(`${process.env.API_URL}/api/facilities`)
       .then(res => res.json())
       .then(data => {
         const canteen = data.find(f => f.type === 'canteen');
         if (canteen) {
           setFacility(canteen);
-          return fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${canteen._id}/menu`);
+          return fetch(`${process.env.API_URL}/api/facilities/${canteen._id}/menu`);
         }
         throw new Error('No canteen found');
       })
@@ -46,14 +46,14 @@ export function CanteenView() {
   // Fetch analytics for rating map (no auth needed, but we'll try)
   useEffect(() => {
     if (!facility) return;
-    fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${facility._id}/analytics`)
+    fetch(`${process.env.API_URL}/api/facilities/${facility._id}/analytics`)
       .then(res => res.ok ? res.json() : [])
       .then(data => {
         const map = {};
         (data || []).forEach(stat => { map[stat.targetId] = stat.averageRating; });
         setRatingsMap(map);
       })
-      .catch(() => {});
+      .catch(() => { });
   }, [facility]);
 
   // Derive categories dynamically
@@ -100,18 +100,18 @@ export function CanteenView() {
         <div className="search-filter-bar">
           <div className="search-input-wrapper">
             <Search size={18} className="search-icon" />
-            <input 
-              type="text" 
-              placeholder="Search items..." 
+            <input
+              type="text"
+              placeholder="Search items..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="search-input"
             />
           </div>
-          
+
           <div className="category-filters">
             {categories.map(cat => (
-              <button 
+              <button
                 key={cat}
                 className={`category-pill ${selectedCategory === cat ? 'active' : ''}`}
                 onClick={() => setSelectedCategory(cat)}
@@ -144,7 +144,7 @@ export function CanteenView() {
                 {searchTerm || selectedCategory !== 'all' ? 'Search Results' : 'All Items'}
                 <span className="results-count">({filteredItems.length})</span>
               </h2>
-              
+
               {filteredItems.length > 0 ? (
                 <div className="canteen-grid">
                   {filteredItems.map(item => (
