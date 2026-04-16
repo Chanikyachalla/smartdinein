@@ -1,0 +1,85 @@
+.entry-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.entry-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.inst-name {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--primary-brand);
+  margin-bottom: 0.5rem;
+}
+
+.current-date {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+.entry-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  flex-grow: 1;
+}
+
+.option-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  border-radius: 12px;
+  background: white;
+  border: 2px solid transparent;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+  text-align: center;
+}
+
+.option-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-color: var(--action-blue);
+}
+
+.option-icon {
+  color: var(--action-blue);
+  margin-bottom: 1rem;
+}
+
+.option-card h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.option-card p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  margin: 0;
+}
+
+.entry-footer {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.vendor-link {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  padding: 0.5rem;
+}
+
+.vendor-link:hover {
+  color: var(--action-blue);
+}

@@ -1,0 +1,49 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  gap: 0.25rem;
+  white-space: nowrap;
+}
+
+.badge-icon {
+  flex-shrink: 0;
+}
+
+/* Availability */
+.badge-available {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.badge-limited {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.badge-soldOut {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Crowd Levels */
+.badge-crowd-low {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.badge-crowd-medium {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.badge-crowd-high {
+  background-color: #fee2e2;
+  color: #991b1b;
+}

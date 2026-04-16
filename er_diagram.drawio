@@ -1,0 +1,86 @@
+<mxfile host="Electron" modified="2024-03-31T12:00:00.000Z" agent="Mozilla/5.0" version="22.1.2" type="device">
+  <diagram id="er-diagram" name="ER Diagram">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Users Entity -->
+        <mxCell id="E_Users" value="&lt;b&gt;Users (Vendors)&lt;/b&gt;&lt;hr&gt;_id : ObjectId&lt;br&gt;username : String&lt;br&gt;passwordHash : String&lt;br&gt;role : String&lt;br&gt;facilityId : ObjectId&lt;br&gt;createdAt : Date" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;spacingRight=15;fillColor=#dae8fc;strokeColor=#6c8ebf;">
+          <mxGeometry x="50" y="50" width="220" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- Facilities Entity -->
+        <mxCell id="E_Facilities" value="&lt;b&gt;Facilities&lt;/b&gt;&lt;hr&gt;_id : ObjectId&lt;br&gt;name : String&lt;br&gt;type : Enum(mess,canteen)&lt;br&gt;location : String&lt;br&gt;vendorId : ObjectId" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;spacingRight=15;fillColor=#d5e8d4;strokeColor=#82b366;">
+          <mxGeometry x="350" y="50" width="220" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- MessMenus Entity -->
+        <mxCell id="E_MessMenus" value="&lt;b&gt;MessMenus&lt;/b&gt;&lt;hr&gt;_id : ObjectId&lt;br&gt;facilityId : ObjectId&lt;br&gt;date : Date&lt;br&gt;slot : Enum(breakfast,lunch,dinner)&lt;br&gt;items : Array(Object)&lt;br&gt;updatedAt : Date" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;spacingRight=15;fillColor=#ffe6cc;strokeColor=#d79b00;">
+          <mxGeometry x="200" y="300" width="240" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- CanteenItems Entity -->
+        <mxCell id="E_CanteenItems" value="&lt;b&gt;CanteenItems&lt;/b&gt;&lt;hr&gt;_id : ObjectId&lt;br&gt;facilityId : ObjectId&lt;br&gt;name : String&lt;br&gt;price : Number&lt;br&gt;category : String&lt;br&gt;availability : Enum&lt;br&gt;dietaryTags : Array(String)" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;spacingRight=15;fillColor=#ffe6cc;strokeColor=#d79b00;">
+          <mxGeometry x="500" y="300" width="240" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- Feedback Entity -->
+        <mxCell id="E_Feedback" value="&lt;b&gt;Feedback&lt;/b&gt;&lt;hr&gt;_id : ObjectId&lt;br&gt;targetType : Enum(meal,item)&lt;br&gt;targetId : ObjectId&lt;br&gt;emoji : String&lt;br&gt;sessionId : String&lt;br&gt;createdAt : Date" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;spacingRight=15;fillColor=#e1d5e7;strokeColor=#9673a6;">
+          <mxGeometry x="350" y="550" width="220" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- CrowdLevels Entity -->
+        <mxCell id="E_CrowdLevels" value="&lt;b&gt;CrowdLevels&lt;/b&gt;&lt;hr&gt;_id : ObjectId&lt;br&gt;facilityId : ObjectId&lt;br&gt;level : Enum(low,medium,high)&lt;br&gt;updatedAt : Date" vertex="1" parent="1" style="rounded=1;whiteSpace=wrap;html=1;align=left;verticalAlign=top;spacingLeft=15;spacingTop=10;spacingRight=15;fillColor=#f8cecc;strokeColor=#b85450;">
+          <mxGeometry x="650" y="50" width="220" height="170" as="geometry" />
+        </mxCell>
+
+        <!-- Relationships (Edges) -->
+        <mxCell id="R1" value="manages (1:1)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="E_Users" target="E_Facilities">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="R2" value="has (1:N)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="E_Facilities" target="E_MessMenus">
+          <mxGeometry relative="1" as="geometry">
+             <Array as="points">
+              <mxPoint x="450" y="250" />
+              <mxPoint x="320" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="R3" value="has (1:N)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="E_Facilities" target="E_CanteenItems">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="450" y="250" />
+              <mxPoint x="620" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="R4" value="has (1:1)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="E_Facilities" target="E_CrowdLevels">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="R5" value="receives (1:N)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="E_MessMenus" target="E_Feedback">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="500" />
+              <mxPoint x="450" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="R6" value="receives (1:N)" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="E_CanteenItems" target="E_Feedback">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="500" />
+              <mxPoint x="450" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
