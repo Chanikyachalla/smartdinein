@@ -509,7 +509,7 @@ export function VendorDashboard() {
 
             {/* â”€â”€ Star Ratings â”€â”€ */}
             <div style={{ padding: '2rem 2rem 1rem' }}>
-              <h4 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>â­ Star Ratings</h4>
+              <h4 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>Star Ratings</h4>
               {loadingAnalytics ? (
                 <p>Loading analytics data...</p>
               ) : analytics.length === 0 ? (
