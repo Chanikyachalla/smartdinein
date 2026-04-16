@@ -19,13 +19,13 @@ export function CanteenView() {
 
   useEffect(() => {
     // fetch canteen facility first, then its items
-    fetch('http://localhost:5000/api/facilities')
+    fetch(`${import.meta.env.VITE_API_URL}/api/facilities`)
       .then(res => res.json())
       .then(data => {
         const canteen = data.find(f => f.type === 'canteen');
         if (canteen) {
           setFacility(canteen);
-          return fetch(`http://localhost:5000/api/facilities/${canteen._id}/menu`);
+          return fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${canteen._id}/menu`);
         }
         throw new Error('No canteen found');
       })
@@ -46,7 +46,7 @@ export function CanteenView() {
   // Fetch analytics for rating map (no auth needed, but we'll try)
   useEffect(() => {
     if (!facility) return;
-    fetch(`http://localhost:5000/api/facilities/${facility._id}/analytics`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${facility._id}/analytics`)
       .then(res => res.ok ? res.json() : [])
       .then(data => {
         const map = {};

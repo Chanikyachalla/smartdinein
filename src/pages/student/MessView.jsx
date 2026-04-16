@@ -16,7 +16,7 @@ export function MessView() {
 
   // Fetch facilities initially
   useEffect(() => {
-    fetch('http://localhost:5000/api/facilities')
+    fetch(`${import.meta.env.VITE_API_URL}/api/facilities`)
       .then(res => res.json())
       .then(data => {
         const messes = data.filter(f => f.type === 'mess');
@@ -35,7 +35,7 @@ export function MessView() {
     if (!selectedFacilityId) return;
 
     setLoading(true);
-    fetch(`http://localhost:5000/api/facilities/${selectedFacilityId}/menu`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${selectedFacilityId}/menu`)
       .then(res => {
         if (!res.ok) throw new Error('Menu not found');
         return res.json();

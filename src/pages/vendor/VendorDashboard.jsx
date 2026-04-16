@@ -50,7 +50,7 @@ export function VendorDashboard() {
     if (activeTab === 'analytics' && vendorInfo?.facilityId) {
         setLoadingAnalytics(true);
         setLoadingReviews(true);
-        fetch(`http://localhost:5000/api/facilities/${vendorInfo.facilityId}/analytics`, {
+        fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/analytics`, {
             headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
         })
         .then(res => res.json())
@@ -63,7 +63,7 @@ export function VendorDashboard() {
             setLoadingAnalytics(false);
         });
 
-        fetch(`http://localhost:5000/api/facilities/${vendorInfo.facilityId}/reviews`, {
+        fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/reviews`, {
             headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
         })
         .then(res => res.json())
@@ -83,7 +83,7 @@ export function VendorDashboard() {
     if (!vendorInfo?.facilityId) return;
     if (activeTab === 'orders') {
       setLoadingOrders(true);
-      fetch(`http://localhost:5000/api/facilities/${vendorInfo.facilityId}/orders`, {
+      fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/orders`, {
         headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
       })
       .then(r => r.json())
@@ -92,7 +92,7 @@ export function VendorDashboard() {
     }
     if (activeTab === 'history') {
       setLoadingOrders(true);
-      fetch(`http://localhost:5000/api/facilities/${vendorInfo.facilityId}/orders/history`, {
+      fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/orders/history`, {
         headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
       })
       .then(r => r.json())
@@ -103,7 +103,7 @@ export function VendorDashboard() {
 
   const loadData = async (facilityId) => {
     try {
-      const facRes = await fetch(`http://localhost:5000/api/facilities/${facilityId}`);
+      const facRes = await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${facilityId}`);
       if (facRes.ok) {
         const facData = await facRes.json();
         setFacility(facData);
@@ -111,7 +111,7 @@ export function VendorDashboard() {
         setActiveTab(facData.type === 'canteen' ? 'canteen' : 'mess');
       }
 
-      const menuRes = await fetch(`http://localhost:5000/api/facilities/${facilityId}/menu`);
+      const menuRes = await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${facilityId}/menu`);
       if (menuRes.ok) {
         const menuData = await menuRes.json();
         if (Array.isArray(menuData)) {
@@ -128,7 +128,7 @@ export function VendorDashboard() {
   const updateCrowd = async (level) => {
     setCrowdLevel(level);
     try {
-      await fetch(`http://localhost:5000/api/facilities/${vendorInfo.facilityId}/crowd`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/crowd`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -150,7 +150,7 @@ export function VendorDashboard() {
     setItems(items.map(item => item._id === id ? { ...item, availability: nextStatus } : item));
 
     try {
-      await fetch(`http://localhost:5000/api/items/${id}/availability`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/items/${id}/availability`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -168,7 +168,7 @@ export function VendorDashboard() {
   const handleAddMessItem = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`http://localhost:5000/api/facilities/${vendorInfo.facilityId}/menu/today`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/menu/today`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -195,7 +195,7 @@ export function VendorDashboard() {
   const handleClearMenu = async () => {
     if (!window.confirm('Are you sure you want to clear the entire menu for today?')) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/facilities/${vendorInfo.facilityId}/menu/today`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/menu/today`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${vendorInfo.token}`
@@ -212,7 +212,7 @@ export function VendorDashboard() {
 
   const handleRemoveItem = async (itemId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/facilities/${vendorInfo.facilityId}/menu/today/items/${itemId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/facilities/${vendorInfo.facilityId}/menu/today/items/${itemId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${vendorInfo.token}`
@@ -229,7 +229,7 @@ export function VendorDashboard() {
 
   const handleNoteReview = async (reviewId) => {
     try {
-      await fetch(`http://localhost:5000/api/feedback/${reviewId}`, {
+      await fetch(`${import.meta.env.VITE_API_URL}/api/feedback/${reviewId}`, {
         method: 'DELETE'
       });
       // Remove from local state instantly
@@ -242,7 +242,7 @@ export function VendorDashboard() {
   const handleAddCanteenItem = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/items', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/items`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${vendorInfo.token}` },
         body: JSON.stringify({
@@ -263,7 +263,7 @@ export function VendorDashboard() {
 
   const handleDeleteCanteenItem = async (itemId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/items/${itemId}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/items/${itemId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
       });
@@ -273,7 +273,7 @@ export function VendorDashboard() {
 
   const handleCompleteOrder = async (orderId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/${orderId}/complete`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders/${orderId}/complete`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${vendorInfo.token}` }
       });
