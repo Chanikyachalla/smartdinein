@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LogOut, Utensils, Coffee, BarChart3, Users, Plus, Trash2, Star, ClipboardList, Clock } from 'lucide-react';
+import { LogOut, Utensils, Coffee, BarChart3, Users, Plus, Trash2, Star, ClipboardList, Clock, MessageSquareText, Phone, Check } from 'lucide-react';
 import { Badge } from '../../components/common/Badge';
 import './VendorDashboard.css';
 
@@ -533,9 +533,9 @@ export function VendorDashboard() {
               )}
             </div>
 
-            {/* â”€â”€ Written Reviews â”€â”€ */}
+            {/* — Written Reviews — */}
             <div style={{ padding: '1rem 2rem 2rem', borderTop: '1px solid var(--border-color)', marginTop: '1rem' }}>
-              <h4 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>ðŸ’¬ Written Reviews</h4>
+              <h4 style={{ marginBottom: '1rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '6px' }}><MessageSquareText size={18} /> Written Reviews</h4>
               {loadingReviews ? (
                 <p>Loading reviews...</p>
               ) : reviews.length === 0 ? (
@@ -559,7 +559,7 @@ export function VendorDashboard() {
                           onMouseEnter={e => e.currentTarget.style.background = '#dcfce7'}
                           onMouseLeave={e => e.currentTarget.style.background = '#f0fdf4'}
                         >
-                          âœ“ Noted
+                          <Check size={14} style={{ marginRight: '4px' }} /> Noted
                         </button>
                       </div>
                     </div>
@@ -570,7 +570,7 @@ export function VendorDashboard() {
           </div>
         )}
 
-        {/* â”€â”€ Live Orders â”€â”€ */}
+        {/* — Live Orders — */}
         {activeTab === 'orders' && facility.type === 'canteen' && (
           <div className="admin-panel">
             <div className="panel-header">
@@ -589,22 +589,22 @@ export function VendorDashboard() {
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.75rem' }}>
                         <div>
                           <h4 style={{ margin: 0 }}>{order.customerName}</h4>
-                          <p style={{ margin: '0.2rem 0 0', fontSize: '0.85rem', color: 'var(--text-secondary)' }}>{order.hostel} â€¢ ðŸ“ž {order.phone}</p>
+                          <p style={{ margin: '0.2rem 0 0', fontSize: '0.85rem', color: 'var(--text-secondary)', display: 'flex', alignItems: 'center', gap: '4px' }}>{order.hostel} • <Phone size={12} /> {order.phone}</p>
                         </div>
                         <span style={{ fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{new Date(order.createdAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}</span>
                       </div>
                       <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 0.75rem' }}>
                         {order.items.map((it, i) => (
                           <li key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.875rem', padding: '0.2rem 0' }}>
-                            <span>{it.name} Ã— {it.quantity}</span>
-                            <span>â‚¹{it.price * it.quantity}</span>
+                            <span>{it.name} × {it.quantity}</span>
+                            <span>₹{it.price * it.quantity}</span>
                           </li>
                         ))}
                       </ul>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid var(--border-color)', paddingTop: '0.5rem' }}>
-                        <strong>Total: â‚¹{order.totalAmount}</strong>
+                        <strong>Total: ₹{order.totalAmount}</strong>
                         <button onClick={() => handleCompleteOrder(order._id)} style={{ padding: '0.4rem 1rem', background: '#16a34a', color: '#fff', border: 'none', borderRadius: '8px', cursor: 'pointer', fontWeight: 600, fontSize: '0.85rem' }}>
-                          âœ“ Completed
+                          <Check size={14} style={{ marginRight: '4px' }} /> Completed
                         </button>
                       </div>
                     </div>

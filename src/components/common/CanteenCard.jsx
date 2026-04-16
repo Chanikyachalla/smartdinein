@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Badge } from './Badge';
-import { Star } from 'lucide-react';
+import { Star, Circle, Flame } from 'lucide-react';
 import './CanteenCard.css';
 
 
@@ -53,15 +53,15 @@ export function CanteenCard({ item }) {
         
         <div className="card-tags">
           {item.dietaryTags.map(tag => (
-            <span key={tag} className={`dietary-tag ${tag}`}>
-              {tag === 'veg' ? 'ðŸŸ¢ Veg' : tag === 'non-veg' ? 'ðŸ”´ Non-Veg' : tag}
+            <span key={tag} className={`dietary-tag ${tag}`} style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+              {tag === 'veg' ? <><Circle size={12} fill="#16a34a" color="#16a34a" /> Veg</> : tag === 'non-veg' ? <><Circle size={12} fill="#dc2626" color="#dc2626" /> Non-Veg</> : tag}
             </span>
           ))}
           <span className="category-tag">{item.category}</span>
-          {item.popular && <span className="popular-tag">ðŸ”¥ Trending</span>}
+          {item.popular && <span className="popular-tag" style={{ display: 'flex', alignItems: 'center', gap: '4px' }}><Flame size={14} fill="currentColor" /> Trending</span>}
           {item.avgRating && (
-            <span className="category-tag" style={{ background: '#fef9c3', color: '#854d0e', border: '1px solid #fde047' }}>
-              â­ {item.avgRating}
+            <span className="category-tag" style={{ background: '#fef9c3', color: '#854d0e', border: '1px solid #fde047', display: 'flex', alignItems: 'center', gap: '4px' }}>
+              <Star size={14} fill="currentColor" /> {item.avgRating}
             </span>
           )}
         </div>

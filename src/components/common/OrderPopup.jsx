@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ShoppingCart, X, ChevronDown, Plus, Minus, Send } from 'lucide-react';
+import { ShoppingCart, X, ChevronDown, Plus, Minus, Send, PartyPopper } from 'lucide-react';
 import './OrderPopup.css';
 
 
@@ -105,7 +105,7 @@ export function OrderPopup({ facilityId, menuItems }) {
             <div className="order-popup-body">
               {submitted ? (
                 <div className="order-thanks">
-                  <span>ðŸŽ‰</span>
+                  <PartyPopper size={48} color="var(--primary-color)" style={{ marginBottom: '1rem' }} />
                   <p>Order placed successfully!</p>
                   <small>We'll prepare your order shortly.</small>
                 </div>

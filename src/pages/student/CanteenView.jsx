@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Search } from 'lucide-react';
+import { ArrowLeft, Search, Flame } from 'lucide-react';
 import { CanteenCard } from '../../components/common/CanteenCard';
 import { Badge } from '../../components/common/Badge';
 import { FeedbackPopup } from '../../components/common/FeedbackPopup';
@@ -130,7 +130,7 @@ export function CanteenView() {
           <>
             {!searchTerm && selectedCategory === 'all' && trendingItems.length > 0 && (
               <section className="trending-section">
-                <h2 className="section-title">ðŸ”¥ Trending Today</h2>
+                <h2 className="section-title" style={{display: 'flex', alignItems: 'center', gap: '8px'}}><Flame size={24} color="#dc2626" /> Trending Today</h2>
                 <div className="canteen-grid">
                   {trendingItems.map(item => (
                     <CanteenCard key={item._id || item.id} item={{ ...item, facilityId: facility?._id, avgRating: ratingsMap[item._id] }} />

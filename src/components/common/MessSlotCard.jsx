@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Star } from 'lucide-react';
+import { Star, Sunrise, Sun, Moon, Utensils } from 'lucide-react';
 import './MessSlotCard.css';
 
 
@@ -32,11 +32,11 @@ export function MessSlotCard({ slotName, time, items, facilityId, menuId }) {
   };
 
   const getSlotIcon = () => {
-    switch (slotName.toLowerCase()) {
-      case 'breakfast': return 'ðŸŒ…';
-      case 'lunch': return 'â˜€ï¸';
-      case 'dinner': return 'ðŸŒ™';
-      default: return 'ðŸ²';
+    switch(slotName.toLowerCase()) {
+        case 'breakfast': return <Sunrise size={18} />;
+        case 'lunch': return <Sun size={18} />;
+        case 'dinner': return <Moon size={18} />;
+        default: return <Utensils size={18} />;
     }
   };
 

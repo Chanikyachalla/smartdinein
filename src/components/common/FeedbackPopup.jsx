@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { MessageSquarePlus, X, Send, ChevronDown } from 'lucide-react';
+import { MessageSquarePlus, X, Send, ChevronDown, CheckCircle2 } from 'lucide-react';
 import './FeedbackPopup.css';
 
 
@@ -85,7 +85,7 @@ export function FeedbackPopup({ facilityId, facilityName }) {
             <div className="feedback-popup-body">
               {submitted ? (
                 <div className="feedback-thanks">
-                  <span>âœ…</span>
+                  <CheckCircle2 size={32} color="var(--success-color)" />
                   <p>Thank you for your feedback!</p>
                 </div>
               ) : (
