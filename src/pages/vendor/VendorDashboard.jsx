@@ -364,7 +364,7 @@ export function VendorDashboard() {
                   <input className="input-field" style={{ marginTop: 0 }} placeholder="e.g. Vada Pav" value={newItemName} onChange={e => setNewItemName(e.target.value)} required />
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
-                  <label style={{ marginBottom: '0.25rem' }}>Price (â‚¹)</label>
+                  <label style={{ marginBottom: '0.25rem' }}>Price (₹)</label>
                   <input className="input-field" style={{ marginTop: 0 }} type="number" placeholder="30" value={newItemPrice} onChange={e => setNewItemPrice(e.target.value)} required />
                 </div>
                 <div className="form-group" style={{ marginBottom: 0 }}>
@@ -390,10 +390,10 @@ export function VendorDashboard() {
               ) : items.map(item => (
                 <div key={item._id} className="inventory-row">
                   <div className="item-details">
-                    <img src={item.imageUrl || 'https://placehold.co/60x60/1e1e2e/6366f1?text=ðŸ½'} alt={item.name} className="item-thumb" />
+                    <img src={item.imageUrl || 'https://placehold.co/60x60/1e1e2e/6366f1?text=Food'} alt={item.name} className="item-thumb" />
                     <div>
                       <h4>{item.name}</h4>
-                      <span className="item-meta">â‚¹{item.price} â€¢ {item.category} â€¢ {item.dietaryTags?.[0]}</span>
+                      <span className="item-meta">₹{item.price} • {item.category} • {item.dietaryTags?.[0]}</span>
                     </div>
                   </div>
                   <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
@@ -507,9 +507,9 @@ export function VendorDashboard() {
               </div>
             </div>
 
-            {/* â”€â”€ Star Ratings â”€â”€ */}
+            {/* -- Star Ratings -- */}
             <div style={{ padding: '2rem 2rem 1rem' }}>
-              <h4 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}>â­ Star Ratings</h4>
+              <h4 style={{ marginBottom: '1rem', color: 'var(--text-primary)' }}> Star Ratings</h4>
               {loadingAnalytics ? (
                 <p>Loading analytics data...</p>
               ) : analytics.length === 0 ? (
@@ -533,7 +533,7 @@ export function VendorDashboard() {
               )}
             </div>
 
-            {/* — Written Reviews — */}
+            {/* -- Written Reviews -- */}
             <div style={{ padding: '1rem 2rem 2rem', borderTop: '1px solid var(--border-color)', marginTop: '1rem' }}>
               <h4 style={{ marginBottom: '1rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '6px' }}><MessageSquareText size={18} /> Written Reviews</h4>
               {loadingReviews ? (
@@ -615,7 +615,7 @@ export function VendorDashboard() {
           </div>
         )}
 
-        {/* â”€â”€ Order History â”€â”€ */}
+        {/* -- Order History -- */}
         {activeTab === 'history' && facility.type === 'canteen' && (
           <div className="admin-panel">
             <div className="panel-header">
@@ -632,11 +632,11 @@ export function VendorDashboard() {
                   {orderHistory.map(order => (
                     <div key={order._id} style={{ background: 'var(--surface)', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '1rem 1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                       <div>
-                        <h4 style={{ margin: 0, fontSize: '0.95rem' }}>{order.customerName} â€” {order.hostel}</h4>
-                        <p style={{ margin: '0.2rem 0 0', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{order.items.map(i => `${i.name}Ã—${i.quantity}`).join(', ')}</p>
+                        <h4 style={{ margin: 0, fontSize: '0.95rem' }}>{order.customerName} - {order.hostel}</h4>
+                        <p style={{ margin: '0.2rem 0 0', fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{order.items.map(i => `${i.name} × ${i.quantity}`).join(', ')}</p>
                       </div>
                       <div style={{ textAlign: 'right' }}>
-                        <strong style={{ color: '#16a34a' }}>â‚¹{order.totalAmount}</strong>
+                        <strong style={{ color: '#16a34a' }}>₹{order.totalAmount}</strong>
                         <p style={{ margin: '0.2rem 0 0', fontSize: '0.75rem', color: 'var(--text-secondary)' }}>{new Date(order.updatedAt).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</p>
                       </div>
                     </div>

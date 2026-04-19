@@ -127,7 +127,7 @@ export function MessView() {
         )}
       </main>
 
-      {/* Gmail-style feedback popup â€” fixed bottom right */}
+      {/* Gmail-style feedback popup - fixed bottom right */}
       {activeFacility && (
         <FeedbackPopup
           facilityId={activeFacility._id}

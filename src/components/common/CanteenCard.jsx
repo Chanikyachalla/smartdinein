@@ -48,7 +48,7 @@ export function CanteenCard({ item }) {
       <div className="card-content">
         <div className="card-header">
           <h3 className="card-title">{item.name}</h3>
-          <span className="card-price">â‚¹{item.price}</span>
+          <span className="card-price">₹{item.price}</span>
         </div>
         
         <div className="card-tags">

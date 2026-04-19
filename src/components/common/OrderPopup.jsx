@@ -124,7 +124,7 @@ export function OrderPopup({ facilityId, menuItems }) {
                       <div key={item._id} className="order-item-row">
                         <div className="order-item-info">
                           <span className="order-item-name">{item.name}</span>
-                          <span className="order-item-price">â‚¹{item.price}</span>
+                          <span className="order-item-price">₹{item.price}</span>
                         </div>
                         <div className="qty-control">
                           <button type="button" onClick={() => adjustQty(item._id, -1)} className="qty-btn"><Minus size={12} /></button>
@@ -139,7 +139,7 @@ export function OrderPopup({ facilityId, menuItems }) {
                   {total > 0 && (
                     <div className="order-total">
                       <span>Total</span>
-                      <strong>â‚¹{total}</strong>
+                      <strong>₹{total}</strong>
                     </div>
                   )}
 

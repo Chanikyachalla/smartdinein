@@ -161,7 +161,7 @@ export function CanteenView() {
         )}
       </main>
 
-      {/* Gmail-style feedback popup â€” fixed bottom right */}
+      {/* Gmail-style feedback popup - fixed bottom right */}
       {facility && (
         <FeedbackPopup
           facilityId={facility._id}
@@ -169,7 +169,7 @@ export function CanteenView() {
         />
       )}
 
-      {/* Order popup â€” fixed above feedback */}
+      {/* Order popup - fixed above feedback */}
       {facility && (
         <OrderPopup
           facilityId={facility._id}
